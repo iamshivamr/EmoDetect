@@ -1,0 +1,24 @@
+# Copy to config.yml and fill in tunnel id/name, credentials path, and hostnames.
+#
+#   cp config.yml.example config.yml
+#
+# Hostnames must be under a domain whose DNS is managed in YOUR Cloudflare account.
+# DuckDNS names (e.g. emodetection.duckdns.org) cannot use "tunnel route dns" — see SETUP.txt.
+#
+# One-time:
+#   1. cloudflared tunnel login
+#   2. cloudflared tunnel create emodet
+#   3. cloudflared tunnel route dns emodet lab.YOUR_DOMAIN.com
+#   4. cloudflared tunnel route dns emodet dashboard.YOUR_DOMAIN.com
+#
+# Credentials: ~/.cloudflared/<TUNNEL_UUID>.json
+
+tunnel: emodet
+credentials-file: /Users/YOU/.cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  - hostname: lab.YOUR_DOMAIN.com
+    service: http://127.0.0.1:8888
+  - hostname: dashboard.YOUR_DOMAIN.com
+    service: http://127.0.0.1:8765
+  - service: http_status:404

@@ -1,0 +1,185 @@
+/*
+ * EmoDetect — palette (your brand colors)
+ * #B298E7 lavender · #B8E3E9 mint · #F5B8D5 rose · #F9BEDD blush
+ */
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-DemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BDOGrotesk";
+  src: url("/fonts/BDOGrotesk-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --font: "BDOGrotesk", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Brand (exact hex) */
+  --lavender: #b298e7;
+  --mint: #b8e3e9;
+  --rose: #f5b8d5;
+  --blush: #f9bedd;
+
+  /* Semantic mapping */
+  --accent: var(--lavender);
+  --accent-bright: #c9b3ef;
+  --accent-dim: rgba(178, 152, 231, 0.35);
+  --accent-glow: rgba(178, 152, 231, 0.45);
+
+  --bg: #fef9fc;
+  --bg-wash: linear-gradient(
+    165deg,
+    #fff5fa 0%,
+    #f3fafb 45%,
+    #fdf5f9 100%
+  );
+  --bg-elevated: rgba(255, 255, 255, 0.92);
+  --border: rgba(178, 152, 231, 0.22);
+  --border-mint: rgba(184, 227, 233, 0.65);
+
+  --text: #3a2f4d;
+  --muted: #6b5f7a;
+
+  --logo-from: var(--lavender);
+  --logo-to: var(--rose);
+  --btn-from: var(--lavender);
+  --btn-to: #9a7ad4;
+
+  --success: #0d9488;
+  --warn: #d97706;
+  --danger: #dc2626;
+
+  --radius: 16px;
+  --radius-sm: 12px;
+
+  --grid-line: rgba(184, 227, 233, 0.24);
+  --aurora-1: rgba(249, 190, 221, 0.45);
+  --aurora-2: rgba(184, 227, 233, 0.5);
+
+  --dropzone-bg: rgba(184, 227, 233, 0.2);
+  --dropzone-hover-bg: rgba(249, 190, 221, 0.25);
+  --dropzone-border-hover: var(--lavender);
+  --dropzone-file: #8b6ec9;
+
+  --metric-bg: rgba(255, 255, 255, 0.75);
+  --metric-highlight-border: rgba(245, 184, 213, 0.85);
+  --metric-highlight-bg: linear-gradient(
+    145deg,
+    rgba(249, 190, 221, 0.35) 0%,
+    rgba(245, 184, 213, 0.2) 100%
+  );
+
+  --regulation-bg: rgba(184, 227, 233, 0.28);
+  --regulation-border: rgba(178, 152, 231, 0.35);
+  --regulation-text: var(--text);
+
+  --loading-scrim: rgba(254, 249, 252, 0.88);
+
+  --panel-stripe-upload: var(--lavender);
+  --panel-stripe-results: var(--rose);
+  --hint-bg: rgba(184, 227, 233, 0.22);
+  --hint-border: rgba(178, 152, 231, 0.28);
+}
+
+/* Dark mode — toggled via <html data-theme="dark"> + localStorage (see dashboard.js) */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --accent: var(--lavender);
+  --accent-bright: #c9b3ef;
+  --accent-dim: rgba(178, 152, 231, 0.38);
+  --accent-glow: rgba(178, 152, 231, 0.5);
+
+  --bg: #141218;
+  --bg-wash: linear-gradient(165deg, #161223 0%, #12101a 45%, #18151f 100%);
+  --bg-elevated: rgba(255, 255, 255, 0.07);
+  --border: rgba(178, 152, 231, 0.24);
+  --border-mint: rgba(184, 227, 233, 0.3);
+
+  --text: #ebe6f0;
+  --muted: #9d92b0;
+
+  --logo-from: var(--lavender);
+  --logo-to: var(--rose);
+  --btn-from: var(--lavender);
+  --btn-to: #9a7ad4;
+
+  --grid-line: rgba(184, 227, 233, 0.1);
+  --aurora-1: rgba(249, 190, 221, 0.22);
+  --aurora-2: rgba(184, 227, 233, 0.18);
+
+  --dropzone-bg: rgba(184, 227, 233, 0.1);
+  --dropzone-hover-bg: rgba(249, 190, 221, 0.14);
+  --dropzone-border-hover: var(--lavender);
+  --dropzone-file: #cbb9e8;
+
+  --metric-bg: rgba(255, 255, 255, 0.06);
+  --metric-highlight-border: rgba(245, 184, 213, 0.45);
+  --metric-highlight-bg: linear-gradient(
+    145deg,
+    rgba(249, 190, 221, 0.22) 0%,
+    rgba(245, 184, 213, 0.1) 100%
+  );
+
+  --regulation-bg: rgba(184, 227, 233, 0.12);
+  --regulation-border: rgba(178, 152, 231, 0.3);
+  --regulation-text: var(--text);
+
+  --loading-scrim: rgba(10, 8, 14, 0.92);
+
+  --panel-stripe-upload: var(--lavender);
+  --panel-stripe-results: var(--rose);
+
+  --hint-bg: rgba(184, 227, 233, 0.1);
+  --hint-border: rgba(178, 152, 231, 0.28);
+}

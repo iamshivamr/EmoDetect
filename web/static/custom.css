@@ -1,0 +1,48 @@
+/*
+ * Optional overrides — loaded last.
+ * Custom cursor (unicursor.png in web/static → /assets/unicursor.png).
+ */
+:root {
+  /* Hotspot = click point in pixels from the image’s top-left; change if the tip isn’t aligned */
+  --cursor-main: url("/assets/unicursor.png?v=1") 0 0, auto;
+  --cursor-pointer: url("/assets/unicursor.png?v=1") 0 0, pointer;
+}
+
+html {
+  cursor: var(--cursor-main);
+}
+
+/* dashboard.css sets cursor: pointer on .dropzone / .btn — override to use the same graphic */
+a,
+button,
+.btn,
+.dropzone,
+label,
+input[type="file"],
+input[type="checkbox"],
+input[type="range"],
+select,
+summary,
+[role="button"] {
+  cursor: var(--cursor-pointer);
+}
+
+.btn:disabled,
+:disabled,
+[disabled] {
+  cursor: not-allowed;
+}
+
+/*
+ * Examples (uncomment and edit):
+ *
+ * :root {
+ *   --accent: #7c3aed;
+ *   --logo-from: #5b21b6;
+ *   --logo-to: #a78bfa;
+ *   --btn-from: #6d28d9;
+ *   --btn-to: #8b5cf6;
+ * }
+ *
+ * .logo { border-radius: 50%; }
+ */

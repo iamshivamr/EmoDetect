@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var k = "emodetect-theme";
+          var s = localStorage.getItem(k);
+          var t =
+            s === "light" || s === "dark"
+              ? s
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#B298E7" />
+    <link rel="icon" href="data:," />
+    <title>emodetect — Emotions from face and voice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double+Ink&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Theme order: tokens → layout → your overrides — bump ?v= after static UI changes (cache bust) -->
+    <link rel="stylesheet" href="/assets/theme.css?v=6" />
+    <link rel="stylesheet" href="/assets/dashboard.css?v=15" />
+    <link rel="stylesheet" href="/assets/custom.css?v=4" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-psych" aria-hidden="true">
+      <span class="bg-psych__orb bg-psych__orb--1"></span>
+      <span class="bg-psych__orb bg-psych__orb--2"></span>
+      <span class="bg-psych__orb bg-psych__orb--3"></span>
+      <span class="bg-psych__bubble bg-psych__bubble--1">🫧</span>
+      <span class="bg-psych__bubble bg-psych__bubble--2">🫧</span>
+      <span class="bg-psych__bubble bg-psych__bubble--3">🫧</span>
+      <span class="bg-psych__glyph bg-psych__glyph--a">💭</span>
+      <span class="bg-psych__glyph bg-psych__glyph--b">🎭</span>
+      <span class="bg-psych__glyph bg-psych__glyph--c">❤️</span>
+      <span class="bg-psych__glyph bg-psych__glyph--d">✨</span>
+    </div>
+    <div class="shell">
+      <header class="top">
+        <div class="brand">
+          <span class="logo-wrap" aria-hidden="true">
+            <span class="logo" id="logoGlyph">🧠</span>
+          </span>
+          <div>
+            <h1 id="appName">emodetect</h1>
+            <p class="tagline" id="appTagline">Emotions from face and voice</p>
+          </div>
+        </div>
+        <div class="top-tools">
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-pressed="false"
+            aria-label="Switch to dark mode"
+            title="Dark mode"
+          >
+            <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">🌙</span>
+            <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀️</span>
+          </button>
+          <div class="status-pill" id="healthPill" data-state="unknown">
+            <span class="dot"></span>
+            <span id="healthText">Checking backend…</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout" id="mainLayout">
+        <section class="panel upload-panel panel--upload" aria-labelledby="upload-heading">
+          <header class="panel-header">
+            <p class="panel-kicker">Input</p>
+            <h2 id="upload-heading">Run analysis</h2>
+          </header>
+          <div class="hint-wrap">
+            <p class="hint" id="hintText">
+              Upload a face image and/or a short speech clip. With both files, DeepFace and the trained audio model run and results are fused; with one file, only that modality is analyzed.
+            </p>
+          </div>
+
+          <div class="drop-row">
+            <label class="dropzone dropzone--image" id="dzPhoto">
+              <input type="file" id="inputPhoto" accept="image/*" hidden />
+              <span class="dz-icon-wrap" aria-hidden="true">
+                <span class="dz-icon">🖼</span>
+              </span>
+              <span class="dz-title">Image</span>
+              <span class="dz-meta" id="photoMeta">JPG, PNG, WebP</span>
+              <span class="dz-file" id="photoName"></span>
+            </label>
+            <label class="dropzone dropzone--audio" id="dzAudio">
+              <input type="file" id="inputAudio" accept="audio/*,.wav,.mp3,.flac,.m4a" hidden />
+              <span class="dz-icon-wrap" aria-hidden="true">
+                <span class="dz-icon">🎵</span>
+              </span>
+              <span class="dz-title">Audio</span>
+              <span class="dz-meta" id="audioMeta">WAV, MP3, FLAC…</span>
+              <span class="dz-file" id="audioName"></span>
+            </label>
+          </div>
+
+          <div class="upload-panel__mid" aria-label="Fusion pipeline">
+            <p class="upload-panel__mid-kicker">Fusion path</p>
+            <div class="pipeline" role="presentation">
+              <div class="pipeline__step">
+                <span class="pipeline__glyph" aria-hidden="true">🖼</span>
+                <span class="pipeline__label">Face</span>
+                <span class="pipeline__hint">DeepFace</span>
+              </div>
+              <span class="pipeline__join" aria-hidden="true">+</span>
+              <div class="pipeline__step">
+                <span class="pipeline__glyph" aria-hidden="true">🎵</span>
+                <span class="pipeline__label">Speech</span>
+                <span class="pipeline__hint">Audio model</span>
+              </div>
+              <span class="pipeline__join pipeline__join--arrow" aria-hidden="true">→</span>
+              <div class="pipeline__step pipeline__step--fuse">
+                <span class="pipeline__glyph" aria-hidden="true">✨</span>
+                <span class="pipeline__label">Fusion</span>
+                <span class="pipeline__hint">Combined read</span>
+              </div>
+            </div>
+            <ul class="upload-panel__tips">
+              <li>Even lighting and a visible face help the image model.</li>
+              <li>Use a short clip (about 3–15 s) for stable audio emotion.</li>
+              <li>Upload one or both — missing modalities are skipped automatically.</li>
+            </ul>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn primary" id="btnAnalyze" disabled>
+              <span class="btn-label" id="analyzeLabel">Analyze fusion</span>
+            </button>
+            <button type="button" class="btn ghost" id="btnClear">
+              <span id="clearLabel">Clear</span>
+            </button>
+          </div>
+          <p class="error" id="errorBox" hidden></p>
+        </section>
+
+        <section class="panel results-panel panel--results" aria-labelledby="results-heading" id="resultsPanel">
+          <header class="panel-header">
+            <p class="panel-kicker">Output</p>
+            <h2 id="results-heading">Results</h2>
+          </header>
+          <div class="results-body" id="resultsBody" hidden>
+            <div class="metric-grid">
+              <article class="metric metric--photo">
+                <span class="metric-label">Image (face)</span>
+                <div class="metric-value-row">
+                  <span class="metric-emoji" id="outPhotoEmoji" aria-hidden="true"></span>
+                  <span class="metric-value" id="outPhoto">—</span>
+                </div>
+              </article>
+              <article class="metric metric--audio">
+                <span class="metric-label">Audio</span>
+                <div class="metric-value-row">
+                  <span class="metric-emoji" id="outAudioEmoji" aria-hidden="true"></span>
+                  <span class="metric-value" id="outAudio">—</span>
+                </div>
+              </article>
+              <article class="metric metric--fused highlight">
+                <span class="metric-label">Fused</span>
+                <div class="metric-value-row">
+                  <span class="metric-emoji" id="outFinalEmoji" aria-hidden="true"></span>
+                  <span class="metric-value" id="outFinal">—</span>
+                </div>
+              </article>
+            </div>
+            <div class="regulation" id="outRegulation"></div>
+            <div class="scores scores-card" id="outScores" hidden>
+              <h3>Face model scores</h3>
+              <ul class="score-list" id="scoreList"></ul>
+            </div>
+            <div class="results-body__fill" aria-label="Reading your results">
+              <p class="results-body__fill-kicker">Interpreting output</p>
+              <p class="results-body__fill-lead">
+                <strong>Fused</strong> blends image and audio reads when both are present; with one file, it reflects that modality only.
+              </p>
+              <ul class="results-body__tips">
+                <li>Use face scores to see how certain the vision model was.</li>
+                <li>
+                  The tip under the metrics suggests a short grounding or breathing idea based on the fused
+                  emotion.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="loading loading--page" id="loadingOverlay" hidden>
+        <span class="loading-whirl" aria-hidden="true">🌀</span>
+        <p id="loadingMessage">Running DeepFace + audio model…</p>
+      </div>
+
+      <footer class="foot">
+        <div class="foot__meta">
+          <span><span id="footerLeft">Backend: FastAPI</span> · Port <code id="portHint">8765</code></span>
+          <span class="mono" id="footerRight">POST /api/analyze</span>
+        </div>
+        <p class="foot__love">made with love 💌</p>
+      </footer>
+    </div>
+    <script src="/assets/config.js?v=4"></script>
+    <script src="/assets/dashboard.js?v=5"></script>
+  </body>
+</html>
