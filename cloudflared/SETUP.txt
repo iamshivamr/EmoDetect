@@ -1,0 +1,48 @@
+Cloudflare Tunnel — Jupyter Lab + EmoDetect dashboard
+======================================================
+
+Local ports:
+  - Jupyter Lab:  http://127.0.0.1:8888
+  - Dashboard:    http://127.0.0.1:8765   (python run_dashboard.py)
+
+brew installs cloudflared globally (e.g. /opt/homebrew/bin/cloudflared), not inside this repo.
+
+1) Install:  brew install cloudflared
+
+2) Login + create tunnel:
+   cloudflared tunnel login
+   cloudflared tunnel create emodet
+   Note UUID; credentials file: ~/.cloudflared/<UUID>.json
+
+3) DNS (domain must be on Cloudflare), e.g. nishtha.rocks:
+   cloudflared tunnel route dns emodet lab.nishtha.rocks
+   cloudflared tunnel route dns emodet dashboard.nishtha.rocks
+   If you renamed the host, delete the old CNAME (e.g. jupyter.nishtha.rocks) in
+   Cloudflare DNS to avoid conflicts, then add/route the new name.
+
+4) Config:
+   cp cloudflared/config.yml.example cloudflared/config.yml
+   Edit credentials-file, hostnames, tunnel name if different.
+
+5) Run:
+   All-in-one (from repo root):  ./start_emodet.sh
+   Or manually:
+   Terminal A: jupyter lab --no-browser --ip=127.0.0.1 --port=8888
+   Terminal B: python run_dashboard.py
+   Terminal C: ./cloudflared/run_tunnel.sh
+
+DuckDNS: emodetection.duckdns.org cannot be used with step 3 (Cloudflare DNS).
+Use a domain on Cloudflare, or DuckDNS + port-forward + reverse proxy (not this tunnel).
+
+Quick test (random *.trycloudflare.com URLs):
+  cloudflared tunnel --url http://127.0.0.1:8888
+  cloudflared tunnel --url http://127.0.0.1:8765
+
+403 on https://lab.nishtha.rocks (Jupyter behind Cloudflare Tunnel):
+  - Merge cloudflared/jupyter_lab_config.snippet.py into ~/.jupyter/jupyter_lab_config.py
+  - Restart Jupyter Lab, then restart cloudflared.
+  - If the 403 page is Cloudflare-branded (not Jupyter), check Zero Trust → Access
+    policies for that hostname, and Security → Events for blocked requests.
+
+Jupyter behind HTTPS: allow_origin must match the public URL, e.g.:
+  c.ServerApp.allow_origin = "https://lab.nishtha.rocks"
